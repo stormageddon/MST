@@ -7,13 +7,47 @@
  */
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class MST {
     private int n, seed;
     private Double p;
+    private boolean shouldPrint = true;
+    private Graph g;
+    private int count = 0;
 
-    public void DFS() {
-	System.out.println("Running depth first search on graph");
+    public void DFS(Vertex v) {
+	ArrayList<Vertex> visited = new ArrayList<Vertex>();
+	if (shouldPrint) {
+	    System.out.println("Depth-First Search:");
+	}
+	count = 0;
+	DFS_Visit(v, visited);
+	
+	if (shouldPrint) {
+	    System.out.println("Vertices: ");
+	    for (int i = 0; i < n; i++) {
+		System.out.printf(" %d",g.getVertex(i).getId());
+	    }
+	    System.out.print("\nPredecessors:\n");
+	    for (int k = 0; k < n; k++) {
+		System.out.printf("%d ",g.getVertex(k).getPredecessor());
+	    }
+	    System.out.println("\n");
+	}
+    }
+
+    public void DFS_Visit(Vertex currVertex, ArrayList<Vertex> visited) {
+	//	currVertex.setPredecessor(predecessorVertex.getId());
+	visited.add(currVertex);
+	for (int i = 0; i < currVertex.getNeighbors().size(); i++) {
+	    Vertex currNeighbor = currVertex.getNeighbors().get(i).vertex;
+	    if( !visited.contains(currNeighbor) ) {
+		currNeighbor.setPredecessor(currVertex.getId());
+		count += 1;
+		DFS_Visit(currNeighbor, visited);
+	    }
+	}
     }
 
     public void readFile(String fileName) throws IOException {
@@ -44,6 +78,22 @@ public class MST {
 	return p;
     }
 
+    public void setGraph(Graph g) {
+	this.g = g;
+    }
+
+    public void setShouldPrint(boolean shouldPrint) {
+	this.shouldPrint = shouldPrint;
+    }
+
+    public boolean shouldPrint() {
+	return shouldPrint;
+    }
+
+    public int getCount() {
+	return this.count;
+    }
+
     public static void main(String[] args) {
 	MST mstObj = new MST();
 	try {
@@ -51,8 +101,32 @@ public class MST {
 	} catch( IOException e ) {
 	    System.out.println("IO Exception");
 	}
-	//	mstObj.DFS();
-	Graph g = new Graph(mstObj.getNumberVertices(), mstObj.getSeed(), mstObj.getProbability());
-	g.printGraphAsAdjacencyList();
+	if (mstObj.getNumberVertices() >= 10) {
+	    mstObj.setShouldPrint(false);
+	}
+	
+	long startTime = System.currentTimeMillis();
+	Graph graph = new Graph(mstObj.getNumberVertices(), mstObj.getSeed(), mstObj.getProbability());
+	mstObj.setGraph(graph);
+
+	boolean validGraph = false;
+	while (!validGraph) {
+	    graph.generateGraph();
+	    mstObj.setGraph(graph);
+	    if (mstObj.shouldPrint()) {
+		graph.printGraphAsMatrix();
+		graph.printGraphAsAdjacencyList();
+	    }
+	    mstObj.DFS(graph.getVertex(0));
+	    if( mstObj.getNumberVertices() == mstObj.getCount() ) {
+		validGraph = true;
+	    }
+	    else {
+		graph.clear();
+		//mstObj.setCount(0);
+	    }
+	}
+	long endTime = System.currentTimeMillis();
+	System.out.printf("Time to generate the graph: %d milliseconds\n\n", endTime - startTime);
     }
 }
