@@ -7,8 +7,10 @@ import java.util.*;
 
 public class Graph {
     private Map<Integer, Vertex> adjacencyList;
-    private Random weightGenerator = new Random(200000);
-    private Random connectionGenerator = new Random(100000);
+    //    private Random weightGenerator = new Random(200000);
+    //    private Random connectionGenerator = new Random(100000);
+    private Random weightGenerator;
+    private Random connectionGenerator;
     private int n, seed;
     private double p;
 
@@ -18,6 +20,8 @@ public class Graph {
 	this.seed = seed;
 	this.p = p;
 	//	generateGraph();
+	this.connectionGenerator = new Random(seed);
+	this.weightGenerator = new Random(2*seed);
     }
 
     /*
