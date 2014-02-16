@@ -11,17 +11,22 @@ public class Graph {
     private Random weightGenerator = new Random(200000);
     private Random connectionGenerator = new Random(100000);
     private List<Integer> remainingVertices = new ArrayList<Integer>();
+    private int n, seed;
+    private double p;
 
-    public Graph() {
+    public Graph(int n, int seed, double p) {
 	System.out.println("Constructing a graph");
 	adjacencyList = new HashMap<Integer, Vertex>();
-	generateGraph(7);
+	this.n = n;
+	this.seed = seed;
+	this.p = p;
+	generateGraph();
     }
 
     /*
      * n := number of vertices in graph
      */
-    public Graph generateGraph(int n) {
+    public Graph generateGraph() {
 
 	for (int i = 0; i < n; i++ ) {
 	    addVertex(i);
