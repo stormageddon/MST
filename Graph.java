@@ -51,7 +51,7 @@ public class Graph {
     }
 
     public void printGraphAsAdjacencyList() {
-	System.out.println("The graph as an adjacency list:");
+	System.out.printf("\nThe graph as an adjacency list:");
 	for(int i = 0; i < adjacencyList.size(); i++) {
 	    Vertex currVertex = adjacencyList.get(i);
 	    System.out.printf("\n%d->",currVertex.getId());

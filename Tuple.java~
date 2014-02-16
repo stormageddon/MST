@@ -1,8 +1,0 @@
-public class Tuple<Vertex,int> {
-    public final Vertex vertex;
-    public final int weight;
-    public Tuple (Vertex x, int y) {
-	this.vertex = x;
-	this.weight = y;
-    }
-}

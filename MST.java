@@ -15,30 +15,15 @@ public class MST {
     private boolean shouldPrint = true;
     private Graph g;
     private int count = 1;
+    private ArrayList<Integer> dfs_results = new ArrayList<Integer>();
 
     public void DFS(Vertex v) {
 	ArrayList<Vertex> visited = new ArrayList<Vertex>();
-	if (shouldPrint) {
-	    System.out.println("Depth-First Search:");
-	}
 	count = 1;
 	DFS_Visit(v, visited);
-	
-	if (shouldPrint) {
-	    System.out.println("Vertices: ");
-	    for (int i = 0; i < n; i++) {
-		System.out.printf(" %d",g.getVertex(i).getId());
-	    }
-	    System.out.print("\nPredecessors:\n");
-	    for (int k = 0; k < n; k++) {
-		System.out.printf("%d ",g.getVertex(k).getPredecessor());
-	    }
-	    System.out.println("\n");
-	}
     }
 
     public void DFS_Visit(Vertex currVertex, ArrayList<Vertex> visited) {
-	//	currVertex.setPredecessor(predecessorVertex.getId());
 	visited.add(currVertex);
 	for (int i = 0; i < currVertex.getNeighbors().size(); i++) {
 	    Vertex currNeighbor = currVertex.getNeighbors().get(i).vertex;
@@ -48,6 +33,20 @@ public class MST {
 		DFS_Visit(currNeighbor, visited);
 	    }
 	}
+    }
+
+    public void printPredecessors() {
+	if (!shouldPrint) { return; }
+	System.out.println("Depth-First Search:");
+	System.out.println("Vertices:");
+	for (int i = 0; i < n; i++) {
+	    System.out.printf(" %d", g.getVertex(i).getId());
+	}
+	System.out.printf("\nPredecessors:\n");
+	for (int k = 0; k < n; k++) {
+	    System.out.printf("%d ", g.getVertex(k).getPredecessor());
+	}
+	System.out.println("\n");
     }
 
     public void readFile(String fileName) throws IOException {
@@ -61,7 +60,7 @@ public class MST {
 	    System.out.println("File not found");
 	} finally {
 	    reader.close();
-	    System.out.printf("\nTEST: n=%d, seed=%d, p=%.1f\n",n,seed,p);
+
 	}
 	
     }
@@ -108,17 +107,10 @@ public class MST {
 	long startTime = System.currentTimeMillis();
 	Graph graph = new Graph(mstObj.getNumberVertices(), mstObj.getSeed(), mstObj.getProbability());
 	mstObj.setGraph(graph);
-
-	int attempt = 1;
 	boolean validGraph = false;
 	while (!validGraph) {
-	    System.out.println("Attempt " + attempt + ": ");
 	    graph.generateGraph();
 	    mstObj.setGraph(graph);
-	    if (mstObj.shouldPrint()) {
-		graph.printGraphAsMatrix();
-		graph.printGraphAsAdjacencyList();
-	    }
 	    mstObj.DFS(graph.getVertex(0));
 
 	    if( mstObj.getNumberVertices() == mstObj.getCount() ) {
@@ -126,11 +118,16 @@ public class MST {
 	    }
 	    else {
 		graph.clear();
-		//mstObj.setCount(0);
-		attempt += 1;
 	    }
 	}
 	long endTime = System.currentTimeMillis();
+	System.out.printf("\nTEST: n=%d, seed=%d, p=%.1f\n",mstObj.getNumberVertices(), mstObj.getSeed(), mstObj.getProbability());
 	System.out.printf("Time to generate the graph: %d milliseconds\n\n", endTime - startTime);
+	if (mstObj.shouldPrint()) {
+	    graph.printGraphAsMatrix();
+	    graph.printGraphAsAdjacencyList();
+	}
+
+	mstObj.printPredecessors();
     }
 }
