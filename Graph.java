@@ -67,4 +67,19 @@ public class Graph {
 	}
 	System.out.println("");
     }
+
+    public void printGraphAsMatrix() {
+	System.out.println("The graph as an adjacency matrix:");
+	for(int i = 0; i < adjacencyList.size(); i++) {
+	    Vertex currVertex = adjacencyList.get(i);
+	    for(int k = 0; k < adjacencyList.size(); k++) {
+		int w = 0;
+		if( currVertex.contains(k) ) {
+		    w = currVertex.getNeighborWeight(adjacencyList.get(k));
+		}
+		System.out.printf("%d\t",w);
+	    }
+	    System.out.println("");
+	}
+    }
 }

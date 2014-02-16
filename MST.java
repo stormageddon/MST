@@ -53,6 +53,7 @@ public class MST {
 	}
 	//	mstObj.DFS();
 	Graph g = new Graph(mstObj.getNumberVertices(), mstObj.getSeed(), mstObj.getProbability());
+	g.printGraphAsMatrix();
 	g.printGraphAsAdjacencyList();
     }
 }

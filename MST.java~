@@ -16,7 +16,7 @@ public class MST {
 	System.out.println("Running depth first search on graph");
     }
 
-    public void readFile(String fileName) {
+    public void readFile(String fileName) throws IOException {
 	BufferedReader reader = null;
 	try {
 	    reader = new BufferedReader(new FileReader(fileName));
@@ -25,8 +25,6 @@ public class MST {
 	    p = Double.parseDouble(reader.readLine());
 	} catch( FileNotFoundException e ) {
 	    System.out.println("File not found");
-	} catch( IOException e ) {
-	    System.out.println("IO Exception");
 	} finally {
 	    reader.close();
 	    System.out.printf("\nTEST: n=%d, seed=%d, p=%.1f\n",n,seed,p);
@@ -34,11 +32,27 @@ public class MST {
 	
     }
 
+    public int getNumberVertices() {
+	return n;
+    }
+
+    public int getSeed() {
+	return seed;
+    }
+
+    public double getProbability() {
+	return p;
+    }
+
     public static void main(String[] args) {
 	MST mstObj = new MST();
-	mstObj.readFile(args[0]);
+	try {
+	    mstObj.readFile(args[0]);
+	} catch( IOException e ) {
+	    System.out.println("IO Exception");
+	}
 	//	mstObj.DFS();
-	Graph g = new Graph();
+	Graph g = new Graph(mstObj.getNumberVertices(), mstObj.getSeed(), mstObj.getProbability());
 	g.printGraphAsAdjacencyList();
     }
 }
