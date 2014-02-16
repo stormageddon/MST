@@ -15,7 +15,8 @@ public class MST {
     private boolean shouldPrint = true;
     private Graph g;
     private int count = 1;
-    private ArrayList<Integer> dfs_results = new ArrayList<Integer>();
+    //    private ArrayList<Integer> dfs_results = new ArrayList<Integer>();
+    private ArrayList<MSTException> errors = new ArrayList<MSTException>();
 
     public void DFS(Vertex v) {
 	ArrayList<Vertex> visited = new ArrayList<Vertex>();
@@ -53,14 +54,34 @@ public class MST {
 	BufferedReader reader = null;
 	try {
 	    reader = new BufferedReader(new FileReader(fileName));
-	    n = Integer.parseInt(reader.readLine());
-	    seed = Integer.parseInt(reader.readLine());
-	    p = Double.parseDouble(reader.readLine());
-	} catch( FileNotFoundException e ) {
-	    System.out.println("File not found");
-	} finally {
-	    reader.close();
+	    try {
+		n = Integer.parseInt(reader.readLine());
+		seed = Integer.parseInt(reader.readLine());
+		if (n < 2) {
+		    errors.add(new MSTException("n must be greater than 1"));
+		}
+	    } catch (NumberFormatException e) {
+		errors.add(new MSTException("n and seed must be integers"));
+	    }
 
+	    try {
+		p = Double.parseDouble(reader.readLine());
+		if (p < 0 || p > 1) {
+		    errors.add(new MSTException("p must be between 0 and 1"));
+		}
+	    } catch (NumberFormatException e) {
+		errors.add(new MSTException("p must be a real number"));
+	    }
+	} catch( IOException e ) {
+	    errors.add(new MSTException("Input file not found"));
+	}
+	finally {
+	    reader.close();
+	    
+	    if( errors.size() > 0 ) {
+		System.out.println(errors.get(0));
+		System.exit(0);
+	    }
 	}
 	
     }
@@ -95,6 +116,10 @@ public class MST {
 
     public static void main(String[] args) {
 	MST mstObj = new MST();
+	if (args.length < 1) {
+	    System.out.println("Input file not found");
+	    System.exit(0);
+	}
 	try {
 	    mstObj.readFile(args[0]);
 	} catch( IOException e ) {
@@ -122,7 +147,7 @@ public class MST {
 	}
 	long endTime = System.currentTimeMillis();
 	System.out.printf("\nTEST: n=%d, seed=%d, p=%.1f\n",mstObj.getNumberVertices(), mstObj.getSeed(), mstObj.getProbability());
-	System.out.printf("Time to generate the graph: %d milliseconds\n\n", endTime - startTime);
+	System.out.printf("Time to generate the graph: %d milliseconds", endTime - startTime);
 	if (mstObj.shouldPrint()) {
 	    graph.printGraphAsMatrix();
 	    graph.printGraphAsAdjacencyList();
