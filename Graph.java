@@ -7,6 +7,7 @@ import java.util.*;
 
 public class Graph {
     private Map<Integer, Vertex> adjacencyList;
+    private int[][] matrixRepresentation;
     //    private Random weightGenerator = new Random(200000);
     //    private Random connectionGenerator = new Random(100000);
     private Random weightGenerator;
@@ -22,6 +23,73 @@ public class Graph {
 	//	generateGraph();
 	this.connectionGenerator = new Random(seed);
 	this.weightGenerator = new Random(2*seed);
+	this.matrixRepresentation = new int[n][n];//generateGraphAsMatrix();
+	//generateGraphAsMatrix();
+    }
+
+    public int[][] generateGraphAsMatrix() {	
+	System.out.println("The graph created as a matrix:\n");
+        /*for(int i = 0; i < adjacencyList.size(); i++) {
+            Vertex currVertex = adjacencyList.get(i);
+	    for( int j = 0; j < adjacencyList.size(); j++ ) {
+		if( currVertex.contains(j) ) {
+		    matrixRepresentation[i][j] = currVertex.getNeighborById(j);//currVertex.getNeighbors().get(j).vertex;//currVertex.getNeighborWeight(adjacencyList.get(i).getNeighbors().get(j).vertex);
+		}
+		
+		if(matrixRepresentation[i][j] == null) {
+		    matrixRepresentation[i][j] = new Vertex(
+		//	    matrixRepresentation[i] = currVertex.getNeighbors();
+	    }
+	    /*            for(int k = 0; k < adjacencyList.size(); k++) {
+		//                int w = 0;
+		if( currVertex.contains(k) ) {
+		    matrixRepresentation[i][k] = currVertex;
+		}
+		matrixRepresentation[i][k] = new Vertex(0,0);
+		}
+        }*/
+
+	for (int i = 0; i < adjacencyList.size(); i++) {
+	    Vertex currVertex = adjacencyList.get(i);
+
+	    for (int j = 0; j < adjacencyList.size(); j++) {
+		Vertex currNeighbor = null;
+	    //for (int j = 0; j < currVertex.getNeighbors().size(); j++) {
+		if( currVertex.contains(adjacencyList.get(j).getId())) {
+		    currNeighbor = currVertex.getNeighborById(adjacencyList.get(j).getId());
+		}
+
+		//		if( currNeighbor != null ) {
+		    //		//		if (currVertex.getNeighbors().get(j) != null) {
+		    //  currNeighbor = currVertex.getNeighborById(currVertex.getNeighbors().get(j).vertex.getId());
+		//		}
+
+		
+		if (currNeighbor != null) {
+		//if (currVertex.contains(currNeighbor.getId())) {
+		    matrixRepresentation[i][j] = currVertex.getNeighborWeight(currNeighbor);//currVertex.getNeighborWeight(currNeighbor));
+		}
+		else {
+		    matrixRepresentation[i][j] = 0;
+		}
+	    }
+	}
+		
+	prettyPrintMatrix();
+
+	return matrixRepresentation;
+    }
+
+    public void prettyPrintMatrix() {
+	System.out.println("Pretty print matrix: " + adjacencyList.size());
+	for (int i = 0; i < adjacencyList.size(); i++ ) {
+	    System.out.print("\n[");
+	    for (int j = 0; j < adjacencyList.size(); j++) {
+		System.out.print(" " + matrixRepresentation[i][j]);//.getNeighborsWeight(matrixRepresentation[i][j])); 
+	    }
+	    System.out.print("]");
+	}
+
     }
 
     /*

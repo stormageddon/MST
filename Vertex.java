@@ -26,6 +26,16 @@ public class Vertex {
 	return neighbors;
     }
 
+    public Vertex getNeighborById(int id) {
+	Vertex toReturn = null;
+	for( Tuple neighbor : neighbors ) {
+	    if( ((Vertex)neighbor.vertex).getId() == id ) {
+		toReturn = ((Vertex)neighbor.vertex);
+	    }
+	}
+	return toReturn;
+    }
+
     public int getId() {
 	return id;
     }
