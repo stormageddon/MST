@@ -28,46 +28,19 @@ public class Graph {
     }
 
     public int[][] generateGraphAsMatrix() {	
-	System.out.println("The graph created as a matrix:\n");
-        /*for(int i = 0; i < adjacencyList.size(); i++) {
-            Vertex currVertex = adjacencyList.get(i);
-	    for( int j = 0; j < adjacencyList.size(); j++ ) {
-		if( currVertex.contains(j) ) {
-		    matrixRepresentation[i][j] = currVertex.getNeighborById(j);//currVertex.getNeighbors().get(j).vertex;//currVertex.getNeighborWeight(adjacencyList.get(i).getNeighbors().get(j).vertex);
-		}
-		
-		if(matrixRepresentation[i][j] == null) {
-		    matrixRepresentation[i][j] = new Vertex(
-		//	    matrixRepresentation[i] = currVertex.getNeighbors();
-	    }
-	    /*            for(int k = 0; k < adjacencyList.size(); k++) {
-		//                int w = 0;
-		if( currVertex.contains(k) ) {
-		    matrixRepresentation[i][k] = currVertex;
-		}
-		matrixRepresentation[i][k] = new Vertex(0,0);
-		}
-        }*/
 
 	for (int i = 0; i < adjacencyList.size(); i++) {
 	    Vertex currVertex = adjacencyList.get(i);
 
 	    for (int j = 0; j < adjacencyList.size(); j++) {
 		Vertex currNeighbor = null;
-	    //for (int j = 0; j < currVertex.getNeighbors().size(); j++) {
+
 		if( currVertex.contains(adjacencyList.get(j).getId())) {
 		    currNeighbor = currVertex.getNeighborById(adjacencyList.get(j).getId());
 		}
 
-		//		if( currNeighbor != null ) {
-		    //		//		if (currVertex.getNeighbors().get(j) != null) {
-		    //  currNeighbor = currVertex.getNeighborById(currVertex.getNeighbors().get(j).vertex.getId());
-		//		}
-
-		
 		if (currNeighbor != null) {
-		//if (currVertex.contains(currNeighbor.getId())) {
-		    matrixRepresentation[i][j] = currVertex.getNeighborWeight(currNeighbor);//currVertex.getNeighborWeight(currNeighbor));
+		    matrixRepresentation[i][j] = currVertex.getNeighborWeight(currNeighbor);
 		}
 		else {
 		    matrixRepresentation[i][j] = 0;
@@ -75,19 +48,19 @@ public class Graph {
 	    }
 	}
 		
-	prettyPrintMatrix();
+	//	prettyPrintMatrix();
 
 	return matrixRepresentation;
     }
 
     public void prettyPrintMatrix() {
-	System.out.println("Pretty print matrix: " + adjacencyList.size());
+	System.out.println("\n\nThe graph as an adjacency matrix:");
 	for (int i = 0; i < adjacencyList.size(); i++ ) {
-	    System.out.print("\n[");
+	    System.out.print("\n ");
 	    for (int j = 0; j < adjacencyList.size(); j++) {
-		System.out.print(" " + matrixRepresentation[i][j]);//.getNeighborsWeight(matrixRepresentation[i][j])); 
+		System.out.print(matrixRepresentation[i][j] + "   ");
 	    }
-	    System.out.print("]");
+	    System.out.print("\n");
 	}
 
     }
@@ -133,21 +106,6 @@ public class Graph {
 	    }
 	}
 	System.out.println("\n");
-    }
-
-    public void printGraphAsMatrix() {
-	System.out.println("The graph as an adjacency matrix:\n");
-	for(int i = 0; i < adjacencyList.size(); i++) {
-	    Vertex currVertex = adjacencyList.get(i);
-	    for(int k = 0; k < adjacencyList.size(); k++) {
-		int w = 0;
-		if( currVertex.contains(k) ) {
-		    w = currVertex.getNeighborWeight(adjacencyList.get(k));
-		}
-		System.out.printf("%d\t",w);
-	    }
-	    System.out.println("\n");
-	}
     }
 
     public Vertex getVertex(int vertexId) {

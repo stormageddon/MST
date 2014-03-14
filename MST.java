@@ -151,7 +151,7 @@ public class MST {
 	System.out.printf("\nTEST: n=%d, seed=%d, p=%.1f\n",mstObj.getNumberVertices(), mstObj.getSeed(), mstObj.getProbability());
 	System.out.printf("Time to generate the graph: %d milliseconds", endTime - startTime);
 	if (mstObj.shouldPrint()) {
-	    graph.printGraphAsMatrix();
+	    graph.prettyPrintMatrix();
 	    graph.printGraphAsAdjacencyList();
 	}
 
