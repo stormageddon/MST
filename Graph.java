@@ -27,6 +27,14 @@ public class Graph {
 	//generateGraphAsMatrix();
     }
 
+    public Map<Integer, Vertex> getAdjacencyList() {
+	return adjacencyList;
+    }
+
+    public int[][] getMatrix() {
+	return matrixRepresentation;
+    }
+
     public int[][] generateGraphAsMatrix() {	
 
 	for (int i = 0; i < adjacencyList.size(); i++) {
@@ -114,5 +122,18 @@ public class Graph {
 
     public void clear() {
 	adjacencyList = new HashMap<Integer, Vertex>();
+    }
+
+    public int getNumberEdges() {
+	int numEdges = 0;
+	for( int i = 0; i < matrixRepresentation.length; i++ ) {
+	    for( int j = 0; j < matrixRepresentation.length; j++ ) {
+		if( matrixRepresentation[i][j] != 0 ){
+		    numEdges++;
+		}
+	    }
+	}
+
+	return numEdges / 2;
     }
 }

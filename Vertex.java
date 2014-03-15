@@ -3,8 +3,9 @@
  *
  */
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Vertex {
+public class Vertex implements Comparator {
     private int id, predecessorId;
     private ArrayList<Tuple<Vertex,Integer>> neighbors;
     public Vertex(Integer id) {
@@ -63,6 +64,11 @@ public class Vertex {
 		return neighbors.get(i).weight;
 	    }
 	}
+	return 0;
+    }
+
+    @Override
+    public int compare(Object v1, Object v2) {
 	return 0;
     }
 }

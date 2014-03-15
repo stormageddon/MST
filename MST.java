@@ -156,5 +156,12 @@ public class MST {
 	}
 
 	mstObj.printPredecessors();
+
+
+	// Perform sorts
+	Sorter sorter = new Sorter();
+	//sorter.insertionSort(graph);
+	sorter.insertionSortMatrix(graph.getMatrix(), graph.getNumberEdges());
+	sorter.insertionSortList(graph.getAdjacencyList(), graph.getNumberEdges());
     }
 }
