@@ -163,5 +163,7 @@ public class MST {
 	//sorter.insertionSort(graph);
 	sorter.insertionSortMatrix(graph.getMatrix(), graph.getNumberEdges());
 	sorter.insertionSortList(graph.getAdjacencyList(), graph.getNumberEdges());
+
+	sorter.countSortMatrix(graph.getMatrix(), graph.getNumberEdges());
     }
 }
