@@ -7,8 +7,8 @@
 import java.util.Comparator;
 
 public class Edge implements Comparator {
-    public int v1;
-    public int v2;
+    public int v1; // left vertex
+    public int v2; // right vertex
     public int weight;
 
     public Edge(int v1, int v2, int weight) {
@@ -37,6 +37,17 @@ public class Edge implements Comparator {
 	}
 	else if (edge1.weight > edge2.weight) {
 	    toReturn = -1;
+	}
+	else {
+	    if( edge1.v1 < edge2.v2 ) {
+		toReturn = 1;
+	    }
+	    else if( edge1.v2 < edge2.v2 ) {
+		toReturn = -1;
+	    }
+	    else {
+		toReturn = 0;
+	    }
 	}
 
 	return toReturn;

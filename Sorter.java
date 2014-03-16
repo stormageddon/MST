@@ -8,6 +8,118 @@ public class Sorter {
   
     public Sorter() { }
 
+    public Edge[] quickSortMatrix(int[][] matrix, int numEdges) {
+	System.out.println("\nSORTED EDGES WITH MATRIX USING QUICK SORT");
+	long startTime = System.currentTimeMillis();
+	Edge[] edges = getEdgesFromMatrix(matrix, numEdges);
+
+	quickSort(edges);
+       
+	long endTime = System.currentTimeMillis();
+	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
+	return edges;
+    }
+
+    public Edge[] quickSortList(Map<Integer, Vertex> adjacencyList, int numEdges) {
+	System.out.println("\nSORTED EDGES WITH LIST USING QUICK SORT");
+	long startTime = System.currentTimeMillis();
+	Edge[] edges = getEdgesFromList(adjacencyList, numEdges);
+
+	quickSort(edges);
+
+	long endTime = System.currentTimeMillis();
+	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
+	return edges;
+    }
+
+    private void quickSort(Edge[] edges) {
+	qSort(edges, 0, edges.length - 1);
+	
+	int totalWeight = 0;
+	for( int j = 0; j < edges.length; j++ ) {
+	    System.out.printf("%d %d weight =  %d \n",edges[j].v1, edges[j].v2, edges[j].weight);
+	    totalWeight += edges[j].weight;
+	}
+	System.out.printf("Total weight = %d\n", totalWeight);
+    }
+
+    private void qSort(Edge[] edges, int lo, int hi) {
+	if (hi <= lo) {
+	    return;
+	}
+	int j = partition(edges, lo, hi);
+	qSort(edges, lo, j-1);
+	qSort(edges, j+1, hi);
+    }
+
+    /*    private void quickSort(Edge[] edges) {
+	//	shuffleArray(edges);
+	qSort(edges, edges[0], edges[edges.length - 1]);
+	
+	for( int i = 0; i < edges.length; i++ ) {
+	    System.out.printf("%d %d weight = %d\n", edges[i].v1, edges[i].v2, edges[i].weight);
+	}
+	}*/
+
+    /*    private void qSort(Edge[] edges, Edge lo, Edge hi) {
+
+	if (lo.weight >= hi.weight) {
+	    return;
+	}
+
+	int pivot_index = partition(edges, lo.weight, hi.weight);
+	System.out.printf("pivot_index = %d \n",pivot_index);
+	System.out.printf("edge at pivot_index: (%d,%d) \n",edges[pivot_index].v1,edges[pivot_index].v2);
+	qSort(edges, lo, edges[pivot_index]);
+	//	qSort(edges, edges[pivot_index], hi);
+    }
+    */
+
+    /*
+    private void shuffleArray(Edge[] edges) {
+	Random rnd = new Random();
+	for (int i = edges.length - 1; i > 0; i--) {
+	    int index = rnd.nextInt(i + 1);
+	    exchange(edges, index, i);
+	    // Simple swap
+	    int a = edges[index];
+		    ar[index] = ar[i];
+		    ar[i] = a;
+
+	}
+    }
+*/
+
+    private int partition(Edge[] edges, int lo, int hi) {
+	int i = lo, j = hi+1;
+	while( true ) {
+	    while (edges[i++].weight < edges[lo].weight) {
+		if (i == hi) {
+		    break;
+		}
+	    }
+	    while (edges[lo].weight < edges[--j].weight) {
+		if (j == lo) {
+		    break;
+		}
+	    }
+
+	    if (i >= j) {
+		break;
+	    }
+	    exchange(edges, i, j);
+	}
+	
+	exchange(edges, lo, j);
+	return j;
+    }
+
+    private void exchange(Edge[] edges, int indexI, int indexJ) {
+	Edge tempEdge = edges[indexI];
+	edges[indexI] = edges[indexJ];
+	edges[indexJ] = tempEdge;
+    }
+
     public Edge[] countSortMatrix(int[][] matrix, int numEdges) {
 	System.out.println("\nSORTED EDGES WITH MATRIX USING COUNT SORT");
 	long startTime = System.currentTimeMillis();
@@ -20,8 +132,20 @@ public class Sorter {
 	return edges;
     }
 
+    public Edge[] countSortList(Map<Integer, Vertex> adjacencyList, int numEdges) {
+	System.out.println("\nSORTED EDGES WITH MATRIX USING COUNT SORT");
+	long startTime = System.currentTimeMillis();
+	Edge[] edges = getEdgesFromList(adjacencyList, numEdges);
+	
+	countSort(edges);
+       
+	long endTime = System.currentTimeMillis();
+	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
+	return edges;
+    }
+
     private void countSort(Edge[] edges) {
-	int[] count = new int[getMaxWeight(edges) + 1];
+	int[] count = new int[(getMaxWeight(edges)) + 1];
 	
 	for( int i = 0; i < edges.length; i++ ) {
 	    Edge currEdge = edges[i];
@@ -40,14 +164,15 @@ public class Sorter {
 	    count[currEdge.weight] = count[currEdge.weight] - 1;
 	}
 
-
+	int totalWeight = 0;
 	for (int x = 0; x < aux.length; x++) {
 	    if( aux[x] != null ) {
 		System.out.printf("%d %d weight = %d\n", aux[x].v1, aux[x].v2, aux[x].weight);
+		totalWeight += aux[x].weight;
 	    }
 	}
 	
-	
+	System.out.printf("Total weight = %d\n", totalWeight);
     }
 
     private int getMaxWeight(Edge[] edges) {
@@ -69,10 +194,6 @@ public class Sorter {
 	    }
 	}
 	return smallest;
-    }
-
-    private void quickSort(Edge[] edges) {
-
     }
 
     private void insertionSort(Edge[] edges) {
@@ -113,6 +234,7 @@ public class Sorter {
 		    if (!Arrays.asList(edges).contains(edgeToAdd)) {
 			edges[edgeIndex] = new Edge(i, j, matrix[i][j]);
 			edgeIndex++;
+
 		    }
 		}
 	    }

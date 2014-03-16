@@ -27,6 +27,10 @@ public class Graph {
 	//generateGraphAsMatrix();
     }
 
+    public getNumVertices() {
+	return this.n;
+    }
+
     public Map<Integer, Vertex> getAdjacencyList() {
 	return adjacencyList;
     }

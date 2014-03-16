@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 public class Vertex implements Comparator {
     private int id, predecessorId;
+    public int matrixRow, matrixCol;
     private ArrayList<Tuple<Vertex,Integer>> neighbors;
     public Vertex(Integer id) {
 	this(id, new ArrayList<Tuple<Vertex, Integer>>());
