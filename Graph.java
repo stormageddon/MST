@@ -27,7 +27,7 @@ public class Graph {
 	//generateGraphAsMatrix();
     }
 
-    public getNumVertices() {
+    public int getNumVertices() {
 	return this.n;
     }
 

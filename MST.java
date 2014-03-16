@@ -159,7 +159,7 @@ public class MST {
 
 
 	// Perform sorts
-	Sorter sorter = new Sorter();
+	Sorter sorter = new Sorter(mstObj.shouldPrint());
 	//sorter.insertionSort(graph);
 	sorter.insertionSortMatrix(graph.getMatrix(), graph.getNumberEdges());
 	sorter.countSortMatrix(graph.getMatrix(), graph.getNumberEdges());

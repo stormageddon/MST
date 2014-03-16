@@ -5,8 +5,12 @@
 import java.util.*;
 
 public class Sorter {
-  
-    public Sorter() { }
+
+    private boolean shouldPrint = true;
+
+    public Sorter(boolean shouldPrint) {
+	this.shouldPrint = shouldPrint;
+    }
 
     public Edge[] quickSortMatrix(int[][] matrix, int numEdges) {
 	System.out.println("\nSORTED EDGES WITH MATRIX USING QUICK SORT");
@@ -37,7 +41,9 @@ public class Sorter {
 	
 	int totalWeight = 0;
 	for( int j = 0; j < edges.length; j++ ) {
-	    System.out.printf("%d %d weight =  %d \n",edges[j].v1, edges[j].v2, edges[j].weight);
+	    if( shouldPrint ) {
+		System.out.printf("%d %d weight =  %d \n",edges[j].v1, edges[j].v2, edges[j].weight);
+	    }
 	    totalWeight += edges[j].weight;
 	}
 	System.out.printf("Total weight = %d\n", totalWeight);
@@ -51,44 +57,6 @@ public class Sorter {
 	qSort(edges, lo, j-1);
 	qSort(edges, j+1, hi);
     }
-
-    /*    private void quickSort(Edge[] edges) {
-	//	shuffleArray(edges);
-	qSort(edges, edges[0], edges[edges.length - 1]);
-	
-	for( int i = 0; i < edges.length; i++ ) {
-	    System.out.printf("%d %d weight = %d\n", edges[i].v1, edges[i].v2, edges[i].weight);
-	}
-	}*/
-
-    /*    private void qSort(Edge[] edges, Edge lo, Edge hi) {
-
-	if (lo.weight >= hi.weight) {
-	    return;
-	}
-
-	int pivot_index = partition(edges, lo.weight, hi.weight);
-	System.out.printf("pivot_index = %d \n",pivot_index);
-	System.out.printf("edge at pivot_index: (%d,%d) \n",edges[pivot_index].v1,edges[pivot_index].v2);
-	qSort(edges, lo, edges[pivot_index]);
-	//	qSort(edges, edges[pivot_index], hi);
-    }
-    */
-
-    /*
-    private void shuffleArray(Edge[] edges) {
-	Random rnd = new Random();
-	for (int i = edges.length - 1; i > 0; i--) {
-	    int index = rnd.nextInt(i + 1);
-	    exchange(edges, index, i);
-	    // Simple swap
-	    int a = edges[index];
-		    ar[index] = ar[i];
-		    ar[i] = a;
-
-	}
-    }
-*/
 
     private int partition(Edge[] edges, int lo, int hi) {
 	int i = lo, j = hi+1;
@@ -167,7 +135,9 @@ public class Sorter {
 	int totalWeight = 0;
 	for (int x = 0; x < aux.length; x++) {
 	    if( aux[x] != null ) {
-		System.out.printf("%d %d weight = %d\n", aux[x].v1, aux[x].v2, aux[x].weight);
+		if( shouldPrint ) {
+		    System.out.printf("%d %d weight = %d\n", aux[x].v1, aux[x].v2, aux[x].weight);
+		}
 		totalWeight += aux[x].weight;
 	    }
 	}
@@ -211,7 +181,9 @@ public class Sorter {
 	}
 
 	for (int index = 0; index < edges.length; index++) {
-	    System.out.println(edges[index]);
+	    if( shouldPrint ) {
+		System.out.println(edges[index]);
+	    }
 	    totalWeight += edges[index].weight;
 	}
 
