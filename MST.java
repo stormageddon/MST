@@ -169,7 +169,12 @@ public class MST {
 	sorter.countSortList(graph.getAdjacencyList(), graph.getNumberEdges());
 	sorter.quickSortList(graph.getAdjacencyList(), graph.getNumberEdges());
 	*/
+	sorter.kruskalFromMatrix(graph.getMatrix(), graph.getNumberEdges(), mstObj.n, "INSERTION SORT");
+	sorter.kruskalFromMatrix(graph.getMatrix(), graph.getNumberEdges(), mstObj.n, "COUNT SORT");
+	sorter.kruskalFromMatrix(graph.getMatrix(), graph.getNumberEdges(), mstObj.n, "QUICKSORT");
+	sorter.kruskalFromList(graph.getAdjacencyList(), graph.getNumberEdges(), mstObj.n, "INSERTION SORT");
+	sorter.kruskalFromList(graph.getAdjacencyList(), graph.getNumberEdges(), mstObj.n, "COUNT SORT");
 
-	sorter.kruskalFromListWithCountSort(graph.getAdjacencyList(), graph.getNumberEdges(), mstObj.n, "countsort");
+	sorter.kruskalFromList(graph.getAdjacencyList(), graph.getNumberEdges(), mstObj.n, "QUICKSORT");
     }
 }

@@ -39,14 +39,22 @@ public class Edge implements Comparator {
 	    toReturn = -1;
 	}
 	else {
-	    if( edge1.v1 < edge2.v2 ) {
+	    if( edge1.v1 < edge2.v1 ) {
 		toReturn = 1;
 	    }
-	    else if( edge1.v2 < edge2.v2 ) {
+	    else if( edge1.v1 > edge2.v1) {
 		toReturn = -1;
 	    }
 	    else {
-		toReturn = 0;
+		if( edge1.v2 < edge2.v2 ) {
+		    toReturn = 1;
+		}
+		else if( edge1.v2 > edge2.v2 ) {
+		    toReturn = -1;
+		}
+		else {
+		    toReturn = 0;
+		}
 	    }
 	}
 

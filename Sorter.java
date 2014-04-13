@@ -12,41 +12,22 @@ public class Sorter {
 	this.shouldPrint = shouldPrint;
     }
 
-    public Edge[] quickSortMatrix(int[][] matrix, int numEdges) {
-	System.out.println("\nSORTED EDGES WITH MATRIX USING QUICK SORT");
-	long startTime = System.currentTimeMillis();
+public Edge[] quickSortMatrix(int[][] matrix, int numEdges) {
 	Edge[] edges = getEdgesFromMatrix(matrix, numEdges);
-
 	quickSort(edges);
-       
-	long endTime = System.currentTimeMillis();
-	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
+
 	return edges;
     }
 
     public Edge[] quickSortList(Map<Integer, Vertex> adjacencyList, int numEdges) {
-	System.out.println("\nSORTED EDGES WITH LIST USING QUICK SORT");
-	long startTime = System.currentTimeMillis();
 	Edge[] edges = getEdgesFromList(adjacencyList, numEdges);
-
 	quickSort(edges);
 
-	long endTime = System.currentTimeMillis();
-	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
 	return edges;
     }
 
     private void quickSort(Edge[] edges) {
 	qSort(edges, 0, edges.length - 1);
-	
-	int totalWeight = 0;
-	for( int j = 0; j < edges.length; j++ ) {
-	    if( shouldPrint ) {
-		System.out.printf("%d %d weight =  %d \n",edges[j].v1, edges[j].v2, edges[j].weight);
-	    }
-	    totalWeight += edges[j].weight;
-	}
-	System.out.printf("Total weight = %d\n", totalWeight);
     }
 
     private void qSort(Edge[] edges, int lo, int hi) {
@@ -61,12 +42,12 @@ public class Sorter {
     private int partition(Edge[] edges, int lo, int hi) {
 	int i = lo, j = hi+1;
 	while( true ) {
-	    while (edges[i++].weight < edges[lo].weight) {
+	    while( edges[i++].compare( edges[i], edges[lo] ) > 0 ) {
 		if (i == hi) {
 		    break;
 		}
 	    }
-	    while (edges[lo].weight < edges[--j].weight) {
+	    while (edges[lo].compare( edges[lo], edges[--j] ) > 0) {
 		if (j == lo) {
 		    break;
 		}
@@ -77,7 +58,7 @@ public class Sorter {
 	    }
 	    exchange(edges, i, j);
 	}
-	
+
 	exchange(edges, lo, j);
 	return j;
     }
@@ -89,26 +70,16 @@ public class Sorter {
     }
 
     public Edge[] countSortMatrix(int[][] matrix, int numEdges) {
-	System.out.println("\nSORTED EDGES WITH MATRIX USING COUNT SORT");
-	long startTime = System.currentTimeMillis();
 	Edge[] edges = getEdgesFromMatrix(matrix, numEdges);
-
 	edges = countSort(edges);
 
-	long endTime = System.currentTimeMillis();
-	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
 	return edges;
     }
 
     public Edge[] countSortList(Map<Integer, Vertex> adjacencyList, int numEdges) {
-	System.out.println("\nSORTED EDGES WITH MATRIX USING COUNT SORT");
-	long startTime = System.currentTimeMillis();
 	Edge[] edges = getEdgesFromList(adjacencyList, numEdges);
-	
 	edges = countSort(edges);
        
-	long endTime = System.currentTimeMillis();
-	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
 	return edges;
     }
 
@@ -131,18 +102,6 @@ public class Sorter {
 	    aux[index] = currEdge;
 	    count[currEdge.weight] = count[currEdge.weight] - 1;
 	}
-
-	int totalWeight = 0;
-	for (int x = 0; x < aux.length; x++) {
-	    if( aux[x] != null ) {
-		if( shouldPrint ) {
-		    System.out.printf("%d %d weight = %d\n", aux[x].v1, aux[x].v2, aux[x].weight);
-		}
-		totalWeight += aux[x].weight;
-	    }
-	}
-	
-	System.out.printf("Total weight = %d\n", totalWeight);
 
 	return aux;
     }
@@ -168,7 +127,7 @@ public class Sorter {
 	return smallest;
     }
 
-    private void insertionSort(Edge[] edges) {
+    private Edge[] insertionSort(Edge[] edges) {
 
 	int totalWeight = 0;
 	int n = edges.length;
@@ -182,15 +141,7 @@ public class Sorter {
 	    edges[i + 1] = tempEdge;
 	}
 
-	for (int index = 0; index < edges.length; index++) {
-	    if( shouldPrint ) {
-		System.out.println(edges[index]);
-	    }
-	    totalWeight += edges[index].weight;
-	}
-
-	System.out.println("Total weight: " + totalWeight);
-
+	return edges;
     }
 
     private Edge[] getEdgesFromMatrix(int[][] matrix, int numEdges) {
@@ -234,39 +185,38 @@ public class Sorter {
     }
 
     public Edge[] insertionSortMatrix(int[][] matrix, int numEdges) {
-	System.out.println("\nSORTED EDGES WITH MATRIX USING INSERTION SORT");
-	long startTime = System.currentTimeMillis();
 	Edge[] edges = getEdgesFromMatrix(matrix, numEdges);
-
 	insertionSort(edges);
 
-	long endTime = System.currentTimeMillis();
-	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
 	return edges;
     }
 
     public Edge[] insertionSortList(Map<Integer, Vertex> adjacencyList, int numEdges) {
-	System.out.println("\nSORTED EDGES WITH LIST USING INSERTION SORT");
-	long startTime = System.currentTimeMillis();
+	//System.out.println("\nSORTED EDGES WITH LIST USING INSERTION SORT");
+	//	long startTime = System.currentTimeMillis();
 	Edge[] edges = getEdgesFromList(adjacencyList, numEdges);
 
 	insertionSort(edges);
 
-	long endTime = System.currentTimeMillis();
-	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
+	//	long endTime = System.currentTimeMillis();
+	//	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
 	return edges;
     }
 
-    public void kruskalFromListWithCountSort(Map<Integer, Vertex> adjacencyList, int numEdges, int numVertices, String sortMethod) {
-	Edge[] edges;
+    public void kruskalFromList(Map<Integer, Vertex> adjacencyList, int numEdges, int numVertices, String sortMethod) {
+	Edge[] edges = new Edge[numEdges];
 
-	if ("countsort".equals(sortMethod)) {
+	System.out.println("\n===================================");
+	System.out.println("KRUSKAL WITH LIST USING " + sortMethod);
+	long startTime = System.currentTimeMillis();
+
+	if ("COUNT SORT".equals(sortMethod)) {
 	    edges = countSortList(adjacencyList, numEdges);
 	}
-	else if ("quicksort".equals(sortMethod)) {
+	else if ("QUICKSORT".equals(sortMethod)) {
 	    edges = quickSortList(adjacencyList, numEdges);
 	}
-	else if ("insertionsort".equals(sortMethod)) {
+	else if ("INSERTION SORT".equals(sortMethod)) {
 	    edges = insertionSortList(adjacencyList, numEdges);
 	}
 
@@ -296,11 +246,73 @@ public class Sorter {
 	    index++;
 	}
 
-	System.out.println("Kruskal;");
-
+	int totalWeight = 0;
 	for( int i = 0; i < mst.size(); i++ ) {
 	    System.out.println(mst.get(i).v1 + " " + mst.get(i).v2 + " weight = " + mst.get(i).weight);
+	    totalWeight += mst.get(i).weight;
 	}
+
+	System.out.println("");
+
+	System.out.println("Total weight of MST using Kruskal: " + totalWeight);
+	long endTime = System.currentTimeMillis();
+	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
+    }
+
+public void kruskalFromMatrix(int[][] matrix, int numEdges, int numVertices, String sortMethod) {
+	Edge[] edges = new Edge[numEdges];
+
+	System.out.println("\n===================================");
+	System.out.println("KRUSKAL WITH MATRIX USING " + sortMethod);
+	long startTime = System.currentTimeMillis();
+
+	if ("COUNT SORT".equals(sortMethod)) {
+	    edges = countSortMatrix(matrix, numEdges);
+	}
+	else if ("QUICKSORT".equals(sortMethod)) {
+	    edges = quickSortMatrix(matrix, numEdges);
+	}
+	else if ("INSERTION SORT".equals(sortMethod)) {
+	    edges = insertionSortMatrix(matrix, numEdges);
+	}
+
+	int[] partition = new int[numVertices];
+	for ( int i = 0; i < numVertices; i++ ) {
+	    partition[i] = i;
+	}
+	
+	int v0;
+	int v1;
+
+	ArrayList<Edge> mst = new ArrayList<Edge>();
+	int index = 0;
+	
+	while( mst.size() < numVertices - 1 ) {
+	    v0 = edges[index].v1;
+	    v1 = edges[index].v2;
+
+	    int root1 = find(v0, partition);
+	    int root2 = find(v1, partition);
+	    
+	    if (root1 != root2) {
+		mst.add(edges[index]);
+		union(root1, root2, partition);
+	    }
+
+	    index++;
+	}
+
+	int totalWeight = 0;
+	for( int i = 0; i < mst.size(); i++ ) {
+	    System.out.println(mst.get(i).v1 + " " + mst.get(i).v2 + " weight = " + mst.get(i).weight);
+	    totalWeight += mst.get(i).weight;
+	}
+
+	System.out.println("");
+
+	System.out.println("Total weight of MST using Kruskal: " + totalWeight);
+	long endTime = System.currentTimeMillis();
+	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
     }
 
     private void union( int u, int v, int[] partition ) {
