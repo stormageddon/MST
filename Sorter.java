@@ -192,14 +192,9 @@ public Edge[] quickSortMatrix(int[][] matrix, int numEdges) {
     }
 
     public Edge[] insertionSortList(Map<Integer, Vertex> adjacencyList, int numEdges) {
-	//System.out.println("\nSORTED EDGES WITH LIST USING INSERTION SORT");
-	//	long startTime = System.currentTimeMillis();
 	Edge[] edges = getEdgesFromList(adjacencyList, numEdges);
-
 	insertionSort(edges);
 
-	//	long endTime = System.currentTimeMillis();
-	//	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
 	return edges;
     }
 
@@ -248,7 +243,9 @@ public Edge[] quickSortMatrix(int[][] matrix, int numEdges) {
 
 	int totalWeight = 0;
 	for( int i = 0; i < mst.size(); i++ ) {
-	    System.out.println(mst.get(i).v1 + " " + mst.get(i).v2 + " weight = " + mst.get(i).weight);
+	    if( shouldPrint ) {
+		System.out.println(mst.get(i).v1 + " " + mst.get(i).v2 + " weight = " + mst.get(i).weight);
+	    }
 	    totalWeight += mst.get(i).weight;
 	}
 
@@ -304,7 +301,9 @@ public void kruskalFromMatrix(int[][] matrix, int numEdges, int numVertices, Str
 
 	int totalWeight = 0;
 	for( int i = 0; i < mst.size(); i++ ) {
-	    System.out.println(mst.get(i).v1 + " " + mst.get(i).v2 + " weight = " + mst.get(i).weight);
+	    if( shouldPrint ) {
+		System.out.println(mst.get(i).v1 + " " + mst.get(i).v2 + " weight = " + mst.get(i).weight);
+	    }
 	    totalWeight += mst.get(i).weight;
 	}
 
