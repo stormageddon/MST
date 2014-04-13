@@ -93,7 +93,7 @@ public class Sorter {
 	long startTime = System.currentTimeMillis();
 	Edge[] edges = getEdgesFromMatrix(matrix, numEdges);
 
-	countSort(edges);
+	edges = countSort(edges);
 
 	long endTime = System.currentTimeMillis();
 	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
@@ -105,14 +105,14 @@ public class Sorter {
 	long startTime = System.currentTimeMillis();
 	Edge[] edges = getEdgesFromList(adjacencyList, numEdges);
 	
-	countSort(edges);
+	edges = countSort(edges);
        
 	long endTime = System.currentTimeMillis();
 	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
 	return edges;
     }
 
-    private void countSort(Edge[] edges) {
+    private Edge[] countSort(Edge[] edges) {
 	int[] count = new int[(getMaxWeight(edges)) + 1];
 	
 	for( int i = 0; i < edges.length; i++ ) {
@@ -143,6 +143,8 @@ public class Sorter {
 	}
 	
 	System.out.printf("Total weight = %d\n", totalWeight);
+
+	return aux;
     }
 
     private int getMaxWeight(Edge[] edges) {
@@ -253,5 +255,65 @@ public class Sorter {
 	long endTime = System.currentTimeMillis();
 	System.out.printf("Runtime: %d milliseconds\n", endTime - startTime);
 	return edges;
+    }
+
+    public void kruskalFromListWithCountSort(Map<Integer, Vertex> adjacencyList, int numEdges, int numVertices, String sortMethod) {
+	Edge[] edges;
+
+	if ("countsort".equals(sortMethod)) {
+	    edges = countSortList(adjacencyList, numEdges);
+	}
+	else if ("quicksort".equals(sortMethod)) {
+	    edges = quickSortList(adjacencyList, numEdges);
+	}
+	else if ("insertionsort".equals(sortMethod)) {
+	    edges = insertionSortList(adjacencyList, numEdges);
+	}
+
+	int[] partition = new int[numVertices];
+	for ( int i = 0; i < numVertices; i++ ) {
+	    partition[i] = adjacencyList.get(i).getId();
+	}
+	
+	int v0;
+	int v1;
+
+	ArrayList<Edge> mst = new ArrayList<Edge>();
+	int index = 0;
+	
+	while( mst.size() < numVertices - 1 ) {
+	    v0 = edges[index].v1;
+	    v1 = edges[index].v2;
+
+	    int root1 = find(v0, partition);
+	    int root2 = find(v1, partition);
+	    
+	    if (root1 != root2) {
+		mst.add(edges[index]);
+		union(root1, root2, partition);
+	    }
+
+	    index++;
+	}
+
+	System.out.println("Kruskal;");
+
+	for( int i = 0; i < mst.size(); i++ ) {
+	    System.out.println(mst.get(i).v1 + " " + mst.get(i).v2 + " weight = " + mst.get(i).weight);
+	}
+    }
+
+    private void union( int u, int v, int[] partition ) {
+	partition[u] = v;
+    }
+
+
+    private int find( int v, int[] partition ) {
+
+	if (v != partition[v]) {
+	    partition[v] = find(partition[v], partition);
+	}
+
+	return partition[v];
     }
 }

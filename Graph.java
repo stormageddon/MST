@@ -65,6 +65,36 @@ public class Graph {
 	return matrixRepresentation;
     }
 
+    /**
+     * This is a bandaid method that will turn my matrix of ints
+     * into a nice array of edges for parts 3 and 4 of the project.
+     *
+     */
+    public Edge[] shittyGetEdgesFromMatrixThisIsBadCoding() {
+	// Get the number of edges in the matrix
+	int numEdges = 0;
+	int jIndent = 0;
+	for( int i = 0; i < n; i++ ) {
+	    for( int j = jIndent; j < n; j++ ) {
+		if( matrixRepresentation[i][j] != 0 ) {
+		    numEdges += 2;
+		}
+	    }
+	}
+
+	Edge[] edges = new Edge[numEdges];
+	int edgesIndex = 0;
+	for( int i = 0; i < n; i++ ) {
+	    for( int j = 0; j < n; j++ ) {
+		if( matrixRepresentation[i][j] != 0 ) {
+		    Edge edge = new Edge(i,j,matrixRepresentation[i][j]);
+		    edges[edgesIndex] = edge;
+		}
+	    }
+	}
+	return edges;
+    }
+
     public void prettyPrintMatrix() {
 	System.out.println("\n\nThe graph as an adjacency matrix:");
 	for (int i = 0; i < adjacencyList.size(); i++ ) {

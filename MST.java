@@ -125,7 +125,7 @@ public class MST {
 	} catch( IOException e ) {
 	    System.out.println("IO Exception");
 	}
-	if (mstObj.getNumberVertices() >= 10) {
+	if (mstObj.getNumberVertices() > 10) {
 	    mstObj.setShouldPrint(false);
 	}
 	
@@ -161,12 +161,15 @@ public class MST {
 	// Perform sorts
 	Sorter sorter = new Sorter(mstObj.shouldPrint());
 	//sorter.insertionSort(graph);
-	sorter.insertionSortMatrix(graph.getMatrix(), graph.getNumberEdges());
+	/*	sorter.insertionSortMatrix(graph.getMatrix(), graph.getNumberEdges());
 	sorter.countSortMatrix(graph.getMatrix(), graph.getNumberEdges());
 	sorter.quickSortMatrix(graph.getMatrix(), graph.getNumberEdges());
 
 	sorter.insertionSortList(graph.getAdjacencyList(), graph.getNumberEdges());
 	sorter.countSortList(graph.getAdjacencyList(), graph.getNumberEdges());
 	sorter.quickSortList(graph.getAdjacencyList(), graph.getNumberEdges());
+	*/
+
+	sorter.kruskalFromListWithCountSort(graph.getAdjacencyList(), graph.getNumberEdges(), mstObj.n, "countsort");
     }
 }
