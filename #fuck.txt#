@@ -1,0 +1,20 @@
+
+	    // Our starting vertex
+	//	    Vertex u = deleteMin(heap);
+
+	    // Get all edges
+	    // Make an edgeMST arrayList (final arrayList)
+	    // Vertex arrayList (
+	    // Binary Heap Priority Queue
+	    // 
+	    // get random vertex (or first)
+	    // Get all neighbors
+	    // put all neighbors into priority queue
+	    // add first vertex to MST
+	    // MST.size() < numVertices
+	    // get root of heap
+	    /// if that vertex is not in MST, get it's neighbors and add to heap
+	    // add the vertex to the MST
+	    // Make an arrayList of empty edges
+	    // for each edge in the graph, if that edges left vertex is the last vertex or the right is, add that edge to the arrayList of empty edges
+	    // for each edge in that array, if the weight of edge == weight of vertex && either left or right vertex is in MST, then add it to edge MST

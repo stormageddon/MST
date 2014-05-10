@@ -160,15 +160,6 @@ public class MST {
 
 	// Perform sorts
 	Sorter sorter = new Sorter(mstObj.shouldPrint());
-	//sorter.insertionSort(graph);
-	/*	sorter.insertionSortMatrix(graph.getMatrix(), graph.getNumberEdges());
-	sorter.countSortMatrix(graph.getMatrix(), graph.getNumberEdges());
-	sorter.quickSortMatrix(graph.getMatrix(), graph.getNumberEdges());
-
-	sorter.insertionSortList(graph.getAdjacencyList(), graph.getNumberEdges());
-	sorter.countSortList(graph.getAdjacencyList(), graph.getNumberEdges());
-	sorter.quickSortList(graph.getAdjacencyList(), graph.getNumberEdges());
-	*/
 	sorter.kruskalFromMatrix(graph.getMatrix(), graph.getNumberEdges(), mstObj.n, "INSERTION SORT");
 	sorter.kruskalFromMatrix(graph.getMatrix(), graph.getNumberEdges(), mstObj.n, "COUNT SORT");
 	sorter.kruskalFromMatrix(graph.getMatrix(), graph.getNumberEdges(), mstObj.n, "QUICKSORT");
@@ -176,5 +167,9 @@ public class MST {
 	sorter.kruskalFromList(graph.getAdjacencyList(), graph.getNumberEdges(), mstObj.n, "COUNT SORT");
 
 	sorter.kruskalFromList(graph.getAdjacencyList(), graph.getNumberEdges(), mstObj.n, "QUICKSORT");
+	
+	// Do Prim's
+	Prim prim = new Prim();
+	prim.performPrimOnMatrix(graph.getMatrix(), graph.getNumberEdges(), graph, mstObj.getNumberVertices());
     }
 }

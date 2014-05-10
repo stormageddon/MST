@@ -5,9 +5,12 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Vertex implements Comparator {
+public class Vertex implements Comparator, Comparable {
     private int id, predecessorId;
     public int matrixRow, matrixCol;
+
+    public Vertex parent;
+    public int priority = 999999;
     private ArrayList<Tuple<Vertex,Integer>> neighbors;
     public Vertex(Integer id) {
 	this(id, new ArrayList<Tuple<Vertex, Integer>>());
@@ -68,8 +71,26 @@ public class Vertex implements Comparator {
 	return 0;
     }
 
-    @Override
-    public int compare(Object v1, Object v2) {
+    public int compare(Object o1, Object o2) {
 	return 0;
     }
+
+    public int compareTo(Object other) {
+	int toReturn = 0;
+
+	if( this.priority < ((Vertex)other).priority ) {
+	    toReturn = 1;
+	}
+	else if( this.priority > ((Vertex)other).priority ) {
+	    toReturn = -1;
+	}
+
+	return toReturn;
+    }
+
+    public int getPriority() {
+	return this.priority;
+    }
+
+    
 }
