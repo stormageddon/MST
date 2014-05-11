@@ -9,6 +9,11 @@ public class Prim {
     int currPriority = 999999;
     ArrayList<Edge> mst = new ArrayList<Edge>();
     ArrayList<Vertex>tPriority = new ArrayList<Vertex>();
+    boolean shouldPrint = false;
+
+    public Prim( boolean shouldPrint ) {
+	this.shouldPrint = shouldPrint;
+    }
 
     public void performPrimOnMatrix(int[][] matrix, int numEdges, Graph g, int numVertices) {
 	ArrayList<Edge> edgesInGraph = new ArrayList<Edge>(Arrays.asList(getEdgesFromMatrix(matrix, numEdges)));
@@ -18,10 +23,22 @@ public class Prim {
 	Heap heap = new Heap();
 	Vertex startVertex = g.getVertex(0);
 	ArrayList<Tuple<Vertex, Integer>> neighborTuples = startVertex.getNeighbors();
-	
+
+	int currSmallest = 999999;
+	Edge firstEdge = null;
+
 	for( Tuple<Vertex, Integer> tuple : neighborTuples ) {
 	    heap.insert(tuple.vertex);
+	    if( tuple.weight < currSmallest ) {
+		currSmallest = tuple.weight;
+		firstEdge = new Edge(startVertex.getId(), ((Vertex)tuple.vertex).getId(), tuple.weight);
+	    }
 	}
+
+	if( firstEdge != null ) {
+	    edgesMST.add(firstEdge);
+	}
+
 	
 	vertices.add(startVertex);
 	
@@ -59,7 +76,9 @@ public class Prim {
 	int totalWeight = 0;
 	System.out.println("MST:");
 	for( Edge edge : edgesMST ) {
-	    //	    System.out.println("\t" + edge.v1 + " " + edge.v2 + " -> " + edge.weight);
+	    if( shouldPrint ) {
+		System.out.println("\t" + edge.v1 + " " + edge.v2 + " -> " + edge.weight);
+	    }
 	    totalWeight += edge.weight;
 	}
 	System.out.println("Total weight: " + totalWeight);

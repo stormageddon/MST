@@ -169,7 +169,7 @@ public class MST {
 	sorter.kruskalFromList(graph.getAdjacencyList(), graph.getNumberEdges(), mstObj.n, "QUICKSORT");
 	
 	// Do Prim's
-	Prim prim = new Prim();
+	Prim prim = new Prim(mstObj.shouldPrint());
 	prim.performPrimOnMatrix(graph.getMatrix(), graph.getNumberEdges(), graph, mstObj.getNumberVertices());
     }
 }
