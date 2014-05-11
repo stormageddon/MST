@@ -171,5 +171,6 @@ public class MST {
 	// Do Prim's
 	Prim prim = new Prim(mstObj.shouldPrint());
 	prim.performPrimOnMatrix(graph.getMatrix(), graph.getNumberEdges(), graph, mstObj.getNumberVertices());
+	prim.performPrimOnList(graph.getAdjacencyList(), graph.getNumberEdges(), graph, mstObj.getNumberVertices());
     }
 }
